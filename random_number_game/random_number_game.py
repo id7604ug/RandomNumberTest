@@ -33,7 +33,8 @@ def main():
         # Get user guess
         guess = user_guessing(random_number)
 
-    return print('Good guess, you got it! The number was: ', random_number)
+    print('Good guess, you got it! The number was: ', random_number)
+    return 'Good guess, you got it! The number was: ' + str(random_number)
 
 if __name__ == '__main__':
     # Call main function

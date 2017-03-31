@@ -4,27 +4,24 @@ from unittest.mock import Mock, patch
 
 class TestGuessing(unittest.TestCase):
 
-    # self.assertEqual(5, user_guessing(5))
-    # @patch('builtins.input', return_value=5)
-    # @patch('random_number_game.random.randrange', return=5)
-    # @patch('random_number_game.get_random_number()', side_effect=[5])
-    # def test_complete_game(self, mock_randint, mock_input):
-    #     self.assertEqual(random_number_game.main(), 'Good guess, you got it! The number was: 5')
-
-
-
-    # 'random_number_game.get_input', side_effect=[5]
-
     # Test getting user input
     @patch('builtins.input', side_effect=[5])
     def test_input(self, mock_input):
         self.assertEqual(random_number_game.get_input(), 5)
 
     # Test Main function
-    @patch('random_number_game.get_input', side_effect=[6])
-    @patch('random_number_game.get_random_number', side_effect=[6])
-    def test_complete_game(self, mock_randrange, mock_input):
-        # random_number = random_number_game.get_random_number
-        # random_number_game.get_random_number = Mock()
-        random_number_game.main()
-        self.assertEqual(random_number_game.main(),'Good guess, you got it! The number was: 6' )
+    @patch('builtins.input', side_effect=[6, 9, 20, 1])
+    def test_complete_game_correct(self, mock_input):
+        rand_nums = [6, 9, 20, 1]
+        self.assertEqual(random_number_game.user_guessing(rand_nums[0]), 6)
+        self.assertEqual(random_number_game.user_guessing(rand_nums[1]), 9)
+        self.assertEqual(random_number_game.user_guessing(rand_nums[2]), 20)
+        self.assertEqual(random_number_game.user_guessing(rand_nums[3]), 1)
+
+    # Test Main function wrong choices
+    @patch('builtins.input', side_effect=[6, 9, 20, 1])
+    def test_complete_game_incorrect(self, mock_input):
+        self.assertEqual(random_number_game.user_guessing(1), 0)
+        self.assertEqual(random_number_game.user_guessing(20), 0)
+        self.assertEqual(random_number_game.user_guessing(10), 0)
+        self.assertEqual(random_number_game.user_guessing(5), 0)
